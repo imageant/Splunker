@@ -40,11 +40,15 @@ while run:
     	  # If the game is quit, stop after the next loop
         if event.type == pygame.QUIT:
             run = False
-        # If any key is pressed, reset the rectangle's position
+        # Process key presses
         elif event.type == pygame.KEYDOWN:
-            # Reset position if it goes off screen
-            rect_y = 0
-
+            # Reset position on the up arrow key
+            if event.key == pygame.K_UP:
+                rect_y = 0
+            # Quit if escape key is pressed
+            if event.key == pygame.K_ESCAPE:
+                run = False
+                
     # Do nothing to the rectangle if we're already on the ground
     # Otherwise move the rectangle down
     if rect_y >= ground:
@@ -63,7 +67,7 @@ while run:
     pygame.display.update()
 
 	  # Delay to control frame rate
-    pygame.time.delay(30)
+    pygame.time.delay(15)
 
 # Quit Pygame
 pygame.quit()
