@@ -4,8 +4,13 @@ import sys
 # Initialize Pygame
 pygame.init()
 
-# Set up the display
-width, height = 500, 480
+# Load the background image
+background_image = pygame.image.load('splunker-background.png')
+
+# Get the width and height of the background image
+width, height = background_image.get_size()
+
+# Setup the display at the same size of the background image
 win = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Splunker")
 
@@ -18,10 +23,13 @@ rect_x = width // 2
 rect_y = 0
 rect_width = 40
 rect_height = 40
-speed = 5
+speed = 10
 
 # Game environment properties
-ground = height - rect_height
+
+# Set the ground to the ground in the background
+# image minus the height of the rectangle
+ground = height - 100 - rect_height
 
 # Main game loop
 run = True
@@ -39,14 +47,14 @@ while run:
 
     # Do nothing to the rectangle if we're already on the ground
     # Otherwise move the rectangle down
-    if rect_y == ground:
-        [] # Do nothing
+    if rect_y >= ground:
+        rect_y = ground
     else:
         # Move the rectangle down
         rect_y += speed
 
     # Fill the background
-    win.fill(WHITE)
+    win.blit(background_image, (0, 0))
 
     # Draw the rectangle
     pygame.draw.rect(win, BLUE, (rect_x, rect_y, rect_width, rect_height))
