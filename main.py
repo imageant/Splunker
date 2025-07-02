@@ -20,21 +20,30 @@ rect_width = 40
 rect_height = 40
 speed = 5
 
+# Game environment properties
+ground = height - rect_height
+
 # Main game loop
 run = True
 while run:
 
 		# Process any events. Currently, only processing the "QUIT" event
     for event in pygame.event.get():
+    	  # If the game is quit, stop after the next loop
         if event.type == pygame.QUIT:
             run = False
+        # If any key is pressed, reset the rectangle's position
+        elif event.type == pygame.KEYDOWN:
+            # Reset position if it goes off screen
+            rect_y = 0
 
-    # Move the rectangle to the right
-    rect_y += speed
-
-    # Reset position if it goes off screen
-    if rect_y > height:
-        rect_y = 0  # Start from the top again
+    # Do nothing to the rectangle if we're already on the ground
+    # Otherwise move the rectangle down
+    if rect_y == ground:
+        [] # Do nothing
+    else:
+        # Move the rectangle down
+        rect_y += speed
 
     # Fill the background
     win.fill(WHITE)
@@ -45,7 +54,8 @@ while run:
     # Update the display
     pygame.display.update()
 
-    pygame.time.delay(30)  # Delay to control frame rate
+	  # Delay to control frame rate
+    pygame.time.delay(30)
 
 # Quit Pygame
 pygame.quit()
