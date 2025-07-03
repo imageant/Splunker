@@ -23,7 +23,7 @@ rect_x = width // 2
 rect_y = 0
 rect_width = 40
 rect_height = 40
-speed = 10
+speed = 0
 
 # Game environment properties
 
@@ -42,19 +42,24 @@ while run:
             run = False
         # Process key presses
         elif event.type == pygame.KEYDOWN:
-            # Reset position on the up arrow key
+            # Decrease speed if up arrow is pressed
             if event.key == pygame.K_UP:
-                rect_y = 0
+                speed -= 3
             # Quit if escape key is pressed
             if event.key == pygame.K_ESCAPE:
                 run = False
-                
-    # Do nothing to the rectangle if we're already on the ground
-    # Otherwise move the rectangle down
-    if rect_y >= ground:
+
+    # Adjust speed by gravity
+    speed += 0.25
+                    
+    # If the rectangle is on the ground or about to go
+    # past the ground, set position to ground. Set downward
+    # speed to zero
+    if rect_y + speed > ground:
         rect_y = ground
+        speed = 0
+    # Otherwise move the rectangle by the speed
     else:
-        # Move the rectangle down
         rect_y += speed
 
     # Fill the background
